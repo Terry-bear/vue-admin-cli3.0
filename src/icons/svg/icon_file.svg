@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_file</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon_file">
+            <rect id="Path" fill-opacity="0.01" fill="#FFFFFF" x="0" y="0" width="60" height="60"></rect>
+            <path d="M0,10.5609756 L55.9453658,10.5609756 C58.0861324,10.5609756 59.9414634,12.2260162 59.9414634,14.4460704 L59.9414634,51.0769648 C59.9414634,53.1582656 58.0861324,54.9620596 55.9453658,54.9620596 L3.99609754,54.9620596 C1.85533102,54.9620596 0,53.297019 0,51.0769648 L0,10.5609756 Z M24.2620209,5 C26.2600697,5 28.1154007,5.97127371 29.2571429,7.49756098 L31.3979094,10.5501355 L0,10.5501355 L0,8.74634146 C0,6.66504063 1.71261322,5 3.99609754,5 L24.2620209,5 Z" id="Combined-Shape" fill="#94DEFF" fill-rule="nonzero"></path>
+            <rect id="Shape" fill="#6BCBF8" x="0" y="14.3658537" width="59.9080139" height="40.5853659" rx="2"></rect>
+        </g>
+    </g>
+</svg>

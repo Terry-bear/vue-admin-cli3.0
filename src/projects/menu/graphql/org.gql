@@ -1,0 +1,478 @@
+query orgByCoBo($token: String!, $pageNo: Int!, $pageSize: Int!, $orgName: String, $status: Int, $isCheck:Boolean = false) {
+  orgByCoBo(token: $token, pageNo: $pageNo, pageSize: $pageSize, orgName:$orgName, status: $status) {
+    pageNo
+    pageSize
+    pageTotalRows
+    pageTotalCount
+    pageRows {
+      orgCode
+      orgNo
+      orgType
+      orgName
+      orgUrl
+      orgEmail
+      orgStatus
+      regAddress
+      industry
+      personScale
+      legalPerson
+      operatorId
+      operatorName
+      licensePicUrl
+      contactPerson
+      contactPhone
+      certifiedStatus
+      certifiedFeedback
+      status
+      postalLonLat
+      newestOrg @include(if: $isCheck){
+        orgName
+        orgNo
+        regAddress
+        industry
+        personScale
+        orgType
+        legalPerson
+        contactPerson
+        contactPhone
+        orgEmail
+        orgUrl
+        orgCode
+        licensePicUrl
+      }
+    }
+  }
+}
+
+query orgByCoBoByToken($token: String!) {
+    orgByCoBoByToken(token: $token){
+        orgCode
+        orgNo
+        operatorId
+        operatorName
+        orgName
+        orgUrl
+        orgEmail
+        regCapital
+        regBusineScope
+        regAddress
+        regAddressCode
+        postalAddress
+        postalAddressCode
+        postalLonLat
+        licensePicUrl
+        industry
+        personScale
+        legalIdCard
+        legalPerson
+        legalPhone
+        contactPerson
+        contactPhone
+        salaryPerson
+        salaryPhone
+        salaryBankName
+        salaryBankCard
+    }
+}
+
+query orgByCoBoById($token: String!, $orgCode: String!) {
+  orgByCoBoById(token: $token, orgCode:$orgCode) {
+    orgCode
+    orgNo
+    orgType
+    orgName
+    orgUrl
+    orgEmail
+    orgStatus
+    regAddress
+    industry
+    personScale
+    legalPerson
+    operatorId
+    licensePicUrl
+    contactPerson
+    contactPhone
+    certifiedStatus
+    certifiedFeedback
+    status
+    postalLonLat
+    newestOrg {
+      orgName
+      orgNo
+      regAddress
+      industry
+      personScale
+      orgType
+      legalPerson
+      contactPerson
+      contactPhone
+      orgEmail
+      orgUrl
+      orgCode
+      licensePicUrl
+    }
+  }
+}
+
+# 新增企业信息---自己
+mutation newOrgByCoMe($orgEditByCoBo: OrgEditByCoBo!, $loginUrl: String!, $checkCode: String!) {
+  newOrgByCoMe(orgEditByCoBo: $orgEditByCoBo, loginUrl:$loginUrl, checkCode: $checkCode) {
+    ...orgDetailByMe
+  }
+}
+fragment orgDetailByMe on Org {
+  orgNo
+  orgCode
+}
+
+# 新增企业信息---运营
+mutation newOrgByCoBo($token: String!, $orgEditByCoBo: OrgEditByCoBo!) {
+  newOrgByCoBo(token: $token, orgEditByCoBo: $orgEditByCoBo) {
+    ...orgDetail
+  }
+}
+fragment orgDetail on Org {
+  orgNo
+  orgCode
+}
+
+
+# 编辑企业信息
+mutation editOrgByCoBo($token: String!, $orgEditByCoBo: OrgEditByCoBo!, $companyNo: String!) {
+  editOrgByCoBo(token: $token, orgEditByCoBo: $orgEditByCoBo, companyNo: $companyNo) {
+    ...OrgDetails
+  }
+}
+fragment OrgDetails on Org {
+  orgName
+  regAddress
+  postalLonLat
+  industry
+  personScale
+  orgType
+  legalPerson
+  contactPhone
+  orgEmail
+  orgUrl
+  orgCode
+  licensePicUrl
+}
+
+# 账号自己查询企业信息
+query orgByMe($token: String!, $orgNo: String!) {
+  orgByMe(token: $token, orgNo: $orgNo) {
+    ...detailByMe
+    newestOrg {
+      orgName
+      orgNo
+      regAddress
+      industry
+      personScale
+      orgType
+      legalPerson
+      contactPerson
+      contactPhone
+      orgEmail
+      orgUrl
+      orgCode
+      licensePicUrl
+    }
+  }
+}
+fragment detailByMe on Org {
+  orgStatus
+  orgName
+  orgNo
+  regAddressCode
+  regAddress
+  industry
+  personScale
+  orgType
+  legalPerson
+  contactPerson
+  contactPhone
+  orgEmail
+  orgUrl
+  orgCode
+  licensePicUrl
+  certifiedStatus
+  certifiedFeedback
+}
+
+# 审核企业修改的信息
+mutation auditOrgByCoBo($token: String!, $orgCode: String!, $certifiedStatus: Int!, $certifiedFeedback: String) {
+  auditOrgByCoBo(token: $token, orgCode: $orgCode, certifiedStatus: $certifiedStatus, certifiedFeedback: $certifiedFeedback) {
+    orgName
+    regAddress
+    industry
+    personScale
+    orgType
+    legalPerson
+    contactPerson
+    contactPhone
+    orgEmail
+    orgUrl
+    orgCode
+    licensePicUrl
+  }
+}
+
+# 业务运营-获取指定组织的层级
+query orgLevelByCoBo($token: String!, $orgCode: String!, $companyNo: String!) {
+  orgLevelByCoBo(token: $token, orgCode: $orgCode, companyNo : $companyNo) {
+    ...OrgDetail
+    children {
+      ...OrgDetail
+      children {
+        ...OrgDetail
+        children {
+          ...OrgDetail
+          children {
+            ...OrgDetail
+          }
+        }
+      }
+    }
+  }
+}
+fragment OrgDetail on OrgLevel {
+  levelId
+  levelName
+  plevelId
+  status
+  createTime
+  updateTime
+}
+
+# 单独的部门结构用于下拉业务运营-获取指定组织的层级
+query orgLevelByCoBo($token: String!, $orgCode: String!, $companyNo: String!) {
+  orgLevelByCoBo(token: $token, orgCode: $orgCode, companyNo : $companyNo) {
+    ...StuckOrgDetail
+    children {
+      ...StuckOrgDetail
+      children {
+        ...StuckOrgDetail
+        children {
+          ...StuckOrgDetail
+          children {
+            ...StuckOrgDetail
+          }
+        }
+      }
+    }
+  }
+}
+fragment StuckOrgDetail on OrgLevel {
+  value: levelId
+  label: levelName
+  plevelId
+  status
+  createTime
+  updateTime
+}
+
+# 业务运营-分页所有员工信息
+query employeeByCoBo($token: String!, $pageNo: Int!, $pageSize: Int!, $levelId: [String]!, $companyNo: String!) {
+  employeeByCoBo(token: $token, pageNo: $pageNo, pageSize: $pageSize, levelId: $levelId, companyNo : $companyNo) {
+    pageNo
+    pageSize
+    pageTotalRows
+    pageTotalCount
+    pageRows {
+      eeId
+      eeName
+      eePhone
+      eeEmail
+      eePhoto
+      postalAddr
+      createTime
+      updateTime
+      levelId
+      levels
+    }
+  }
+}
+
+# 业务运营-新增员工信息
+mutation newEmployeeByCoBo($token: String!, $employeeByCoBo: EmployeeByCoBo!, $companyNo: String!) {
+  newEmployeeByCoBo(token: $token, employeeByCoBo: $employeeByCoBo,  companyNo: $companyNo) {
+    ...detail
+  }
+}
+fragment detail on Employee {
+  eeId
+  eeName
+  eeIdCard
+  eePhone
+  eeEmail
+  eePhone
+  userId
+}
+
+# 业务运营-编辑员工信息
+mutation editEmployeeByCoBo($token: String!, $employeeByCoBo: EmployeeByCoBo!, $companyNo: String!) {
+  editEmployeeByCoBo(token: $token, employeeByCoBo: $employeeByCoBo, companyNo: $companyNo) {
+    ...detail
+  }
+}
+fragment detail on Employee {
+  eeId
+  eeName
+  eeIdCard
+  eePhone
+  eeEmail
+  eePhone
+  userId
+}
+
+# 业务运营-删除员工信息
+mutation delEmployeeByCoBo($token: String!, $eeId: [String]!, $companyNo: String!) {
+  delEmployeeByCoBo(token: $token, eeId: $eeId, companyNo : $companyNo)
+}
+
+# 修改企业状态
+mutation delOrEditOrgByCoBo($token: String!, $orgCode: String!, $status: Int!) {
+  delOrEditOrgByCoBo(token: $token, orgCode: $orgCode, status: $status)
+}
+
+# 租户列表查询
+query lesseeByCoBo($token: String!, $pageNo: Int!, $pageSize: Int!, $key: String) {
+    lesseeByCoBo(token: $token, pageNo: $pageNo, pageSize: $pageSize, key: $key){
+        pageNo
+        pageSize
+        pageTotalCount
+        pageTotalRows
+        pageRows{
+            lesseeId
+            lesseeNo
+            systemName
+            principalPart
+            lesseeType
+            principalPerson
+            principalMobile
+            loginUrl
+            lesseeTitle
+            lesseeLogoUrl
+            lesseeFeedback
+            lesseeStatus
+            createTime
+            updateTime
+        }
+    }
+}
+
+# 新增租户
+mutation newLesseeByCoBo($token: String!, $lesseeInput: LesseeInput!){
+    newLesseeByCoBo(token: $token, lesseeInput: $lesseeInput){
+        systemName
+        principalPart
+        lesseeType
+        principalPerson
+        principalMobile
+    }
+}
+
+# 专员管理列表
+query commissionerByCoBo($token: String!, $pageNo: Int!, $pageSize: Int!, $key: String) {
+    commissionerByCoBo(token: $token, pageNo: $pageNo, pageSize: $pageSize, key: $key){
+        pageNo
+        pageSize
+        pageTotalCount
+        pageTotalRows
+        pageRows{
+            commId
+            lesseeId
+            userName
+            mobile
+            name
+            commStatus
+            createTime
+            updateTime
+            passWord
+            orgList
+        }
+    }
+}
+
+#新增专员
+mutation newCommissionerCoBo($token: String!, $commissionerInput: CommissionerInput!){
+    newCommissionerCoBo(token: $token, commissionerInput: $commissionerInput){
+        commId
+        lesseeId
+        userName
+        mobile
+        name
+        commStatus
+        createTime
+        updateTime
+        passWord
+    }
+}
+
+# 租户编辑和设置
+mutation editLesseeByCoBo($token: String!, $lesseeInput: LesseeInput!) {
+  editLesseeByCoBo(token: $token, lesseeInput: $lesseeInput) {
+    lesseeId
+  }
+}
+
+# 租户启用停用
+mutation actLesseeByCoBo($token: String!, $lesseeNo: String!, $status: Boolean!){
+  actLesseeByCoBo(token: $token, lesseeNo: $lesseeNo, status: $status)
+}
+
+# 专员编辑
+mutation editCommissionerByCoBo($token: String!, $commissionerInput: CommissionerInput!){
+    editCommissionerByCoBo(token: $token, commissionerInput: $commissionerInput){
+        commId
+        lesseeId
+        userName
+        mobile
+        name
+        commStatus
+        createTime
+        updateTime
+        passWord
+    }
+}
+
+# 所有专员信息
+query commissionerAllByCoBo($token: String!) {
+  commissionerAllByCoBo(token: $token){
+    commId
+    name
+  }
+}
+
+# 专员转移
+mutation transferCommissionerByCoBo($token: String!, $oldCommId: String!, $newCommId: String!) {
+  transferCommissionerByCoBo(token: $token, oldCommId: $oldCommId, newCommId: $newCommId)
+}
+
+#专员启用 停用
+mutation actCommissionerByCoBo($token: String!, $commId:String!, $status: Boolean!) {
+  actCommissionerByCoBo(token: $token, commId: $commId, status: $status)
+}
+
+# todo 根据租户url判断是否属于此登录页
+query lesseeByLeUrl($loginUrl: String!) {
+    lesseeByLeUrl(loginUrl: $loginUrl){
+        lesseeId
+        lesseeNo
+        systemName
+        principalPart
+        lesseeType
+        principalPerson
+        principalMobile
+        loginUrl
+        lesseeTitle
+        lesseeLogoUrl
+        lesseeFeedback
+        lesseeStatus
+    }
+}
+
+# todo 回显租户可选的url
+query lesseeLoginUrlByCoBo($token: String!) {
+    lesseeLoginUrlByCoBo(token: $token)
+}

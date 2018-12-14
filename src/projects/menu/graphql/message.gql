@@ -1,0 +1,40 @@
+query messageByCoBo($token: String!, $pageNo: Int!, $pageSize: Int!, $key: String) {
+  messageByCoBo(token: $token, pageNo: $pageNo, pageSize: $pageSize, key: $key) {
+    pageNo
+    pageSize
+    pageRows {
+      messageId
+      title
+      messageType
+      messageWeight
+      messageStauts
+      updateTime
+      createTime
+    }
+    pageTotalCount
+    pageTotalRows
+  }
+}
+
+
+query messageByCoBoById($token: String!, $messageId: String!) {
+  messageByCoBoById(token: $token, messageId: $messageId) {
+    messageId
+    content
+    title
+    messageType
+    messageWeight
+    messageStauts
+    updateTime
+    createTime
+  }
+}
+
+mutation delmessageByCoBo($token: String!, $messageIds: [String]!) {
+  delmessageByCoBo(token: $token, messageIds: $messageIds)
+}
+
+# 一键已读
+mutation editmessageByCoBo($token: String!, $messageIds: [String]!){
+    editmessageByCoBo(token: $token, messageIds: $messageIds)
+}

@@ -1,0 +1,45 @@
+body{
+  background-color: #F0F2F5;
+}
+.browser-navigation-hidden{
+  overflow: hidden !important;
+}
+.calendar-list-container {
+  background-color: #fff;
+  margin: 24px;
+  padding: {
+    top: 1px;
+  }
+}
+// 搜索边距
+.filter-container {
+  margin: {
+    top: 23px;
+    left: 32px;
+    bottom: 24px;
+  }
+}
+
+// table头样式
+.el-table {
+  margin: 0 24px;
+}
+.el-table th.is-leaf {
+  background-color: #fafafa;
+}
+
+/**
+ * 分页css
+ */
+.pagination-container {
+  margin: {
+    top: 24px;
+    bottom: 24px;
+    right: 24px;
+  }
+  padding: {
+    bottom: 24px;
+  }
+  display: flex;
+  flex-direction: row-reverse;
+}

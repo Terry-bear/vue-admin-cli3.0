@@ -1,0 +1,13 @@
+// 全局样式文件
+// todo 宽高
+@mixin wh($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+// todo 字体
+@mixin fontStyle {
+  font-size: 14px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+}

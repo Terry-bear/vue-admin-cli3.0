@@ -1,0 +1,19 @@
+query area($areaCode: String!, $hasSub: Boolean = false, $extfilde: Boolean = true) {
+  area(areaCode: $areaCode, hasSub: $hasSub) {
+    ...baseArea
+    ...extArea @skip(if: $extfilde)
+    sub{
+      name
+    }
+  }
+}
+fragment baseArea on Area {
+  name
+  fullName
+  code
+}
+fragment extArea on Area {
+  polygon
+  extAttr1
+  extAttr2
+}

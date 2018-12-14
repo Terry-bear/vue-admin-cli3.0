@@ -1,0 +1,95 @@
+query menuByMe($token: String!,$companyNo: String!) {
+  menuByMe(token: $token,companyNo: $companyNo) {
+    ...MenuItem
+    children{
+      ...MenuItem
+      children{
+        ...MenuItem
+      }
+    }
+  }
+}
+fragment MenuItem on Menu {
+  index:menuId
+  label
+  icon
+  href
+}
+
+query menuByCoTo($token: String!, $companyNo: String!, $pageNo: Int!, $pageSize: Int!, $key:String) {
+  menuByCoTo(token: $token, companyNo: $companyNo, pageNo: $pageNo, pageSize: $pageSize, key:$key) {
+   pageNo
+    pageSize
+    pageTotalRows
+    pageTotalCount
+    pageRows{
+      menuId
+      label
+      icon
+      href
+      useCount
+      createTime
+      updateTime
+    }
+  }
+}
+
+# 企业运营接口menuByCoBo newMenuPerByCoBo delMenuPerByCoBo
+query menuByCoBo($token: String!, $companyNo: String!) {
+  menuByCoBo(token: $token, companyNo: $companyNo) {
+    groupId
+    groupName
+    groupMenu {
+      ...MenuDetail
+      children {
+        ...MenuDetail
+        children {
+          ...MenuDetail
+        }
+      }
+    }
+    otherMenu {
+      ...MenuDetail
+    }
+  }
+}
+fragment MenuDetail on Menu {
+  menuId
+  label
+  icon
+  href
+  status
+  createTime
+  updateTime
+}
+
+mutation newMenuPermissionByCoBo($token: String!, $companyNo: String!, $groupId: String!, $groupName: String!, $menuId: String!, $pmenuId: String!) {
+  newMenuPermissionByCoBo(token: $token, companyNo: $companyNo, groupId: $groupId, groupName: $groupName, menuId: $menuId, pmenuId: $pmenuId){
+    groupId
+  }
+}
+
+mutation delMenuPermissionByCoBo($token: String!, $companyNo: String!, $groupId: String!, $menuId: String!) {
+  delMenuPermissionByCoBo(token: $token, companyNo: $companyNo, groupId: $groupId, menuId: $menuId)
+}
+
+mutation editMenuByCoTo($token: String!, $companyNo: String!, $menuId: String!, $label: String, $href: String, $icon: String) {
+  editMenuByCoTo(token: $token, companyNo: $companyNo, menuId: $menuId, label: $label, href: $href, icon: $icon){
+    menuId
+  }
+}
+
+mutation newMenuByCoTo($token: String!, $companyNo: String!, $label: String!, $href: String, $icon: String) {
+  newMenuByCoTo(token: $token, companyNo: $companyNo, label: $label, href: $href, icon: $icon) {
+    menuId
+    label
+    icon
+    status
+    createTime
+    updateTime
+  }
+}
+
+mutation delMenuByCoTo($token: String!, $companyNo: String!, $menuIds: [String]!) {
+  delMenuByCoTo(token: $token, companyNo: $companyNo, menuIds: $menuIds)
+}

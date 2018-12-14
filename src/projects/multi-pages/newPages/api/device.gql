@@ -1,0 +1,19 @@
+query deviceCodeByCoBo($token: String!, $devicePackage: String!) {
+  deviceCodeByCoBo(token: $token, devicePackage: $devicePackage)
+}
+query deviceNameByCoBo($token: String!) {
+  deviceNameByCoBo(token: $token) {
+    devicePackage
+    deviceName
+    deviceVersion {
+      downUrl
+      versionCode
+      versionName
+    }
+  }
+}
+mutation newDeviceVersionByCoBo($token: String!, $deviceVersionInput: DeviceVersionInput!) {
+  newDeviceVersionByCoBo(token: $token, deviceVersionInput: $deviceVersionInput) {
+    deviceId
+  }
+}

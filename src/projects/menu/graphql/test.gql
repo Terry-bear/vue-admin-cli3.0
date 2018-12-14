@@ -1,0 +1,47 @@
+mutation editTaskByCoBo($token: String!, $offerId: String!, $status: Boolean!) {
+  editTaskByCoBo(token: $token, offerId: $offerId, status: $status)
+}
+
+query orgByCoBo($token: String!, $pageNo: Int!, $pageSize: Int!, $key:String, $isCheck:Boolean = false) {
+  orgByCoBo(token: $token, pageNo: $pageNo, pageSize: $pageSize, key:$key) {
+    pageNo
+    pageSize
+    pageTotalRows
+    pageTotalCount
+    pageRows {
+      orgCode
+      orgNo
+      orgType
+      orgName
+      orgUrl
+      orgEmail
+      orgStatus
+      regAddress
+      industry
+      personScale
+      legalPerson
+      licensePicUrl
+      contactPerson
+      contactPhone
+      certifiedStatus
+      certifiedFeedback
+      status
+      postalLonLat
+      newestOrg @include(if: $isCheck){
+        orgName
+        orgNo
+        regAddress
+        industry
+        personScale
+        orgType
+        legalPerson
+        contactPerson
+        contactPhone
+        orgEmail
+        orgUrl
+        orgCode
+        licensePicUrl
+      }
+    }
+  }
+}
